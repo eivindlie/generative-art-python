@@ -5,14 +5,15 @@ from PIL import Image, ImageDraw
 
 from palettes import PALETTES
 
-size = (1920, 1024)
+size = (8000, 6400)
 palette = PALETTES[1]
-n_particles = 10
+n_particles = 20
 random_range = 1.5
 depth = 7
-initial_length = 80
+initial_length = 150
 length_reduction = 0.95
-line_width = 3
+line_width = 5
+width_reduction = 0.8
 branching_factor = 2
 
 
@@ -32,7 +33,7 @@ def draw_rays(output_file='rays.png'):
         last_pos = p[1]
         new_pos = move_particle(p[1], p[0], initial_length * (length_reduction ** d))
         color = random.choice(palette)
-        draw.line(last_pos + new_pos, color, width=line_width)
+        draw.line(last_pos + new_pos, color, width=int(line_width * (width_reduction ** d)))
 
         return [(p[0] + random.random() * random_range - random_range / 2, new_pos)
                 for i in range(branching_factor)]
